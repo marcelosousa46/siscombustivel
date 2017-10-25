@@ -45,8 +45,7 @@ begin
     Registros := oDao.Buscar(ATab);
     if Registros>0 then
     begin
-      ShowMessage(ATab.Tanque);
-//      ShowMessage(Format('Registro encontrado: %d', [Registros]));
+      ShowMessage(Format('Registro encontrado: %d', [Registros]));
     end
     else
     ShowMessage('Registro não encontrado!');
