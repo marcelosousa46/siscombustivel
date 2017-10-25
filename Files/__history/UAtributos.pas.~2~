@@ -1,0 +1,50 @@
+unit UAtributos;
+
+interface
+
+uses
+  Rtti;
+
+type
+  TNomeTabela = class(TCustomAttribute)
+  private
+    FNomeTabela: string;
+  public
+    constructor Create(ANomeTabela: string);
+    property NomeTabela: string read FNomeTabela write FNomeTabela;
+  end;
+
+  TCampos = class(TCustomAttribute)
+  public
+    function IsPk: Boolean; virtual;
+  end;
+
+  TCampoPk = class(TCampos)
+  public
+    function IsPk: Boolean; override;
+  end;
+
+implementation
+
+{ TCampos }
+
+function TCampos.IsPk: Boolean;
+begin
+  Result := False;
+end;
+
+{ TCampoPk }
+
+function TCampoPk.IsPk: Boolean;
+begin
+  Result := True;
+end;
+
+{ TNomeTabela }
+
+constructor TNomeTabela.Create(ANomeTabela: string);
+begin
+  FNomeTabela := ANomeTabela;
+end;
+
+end.

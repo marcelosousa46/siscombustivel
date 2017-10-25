@@ -1,0 +1,41 @@
+unit UControllerTanque;
+
+interface
+
+uses
+  UDAO;
+
+type
+
+  TControllerTanque = class
+  private
+    { private declarations }
+  protected
+    { protected declarations }
+  public
+    constructor create;
+
+    function Excluir(ATabela: TObject): Integer;
+    { public declarations }
+
+  published
+    { published declarations }
+  end;
+var
+  oDao : TDAO;
+
+implementation
+
+{ TControllerTanque }
+
+constructor TControllerTanque.create;
+begin
+  oDao := TDAO.Create;
+end;
+
+function TControllerTanque.Excluir(ATabela: TObject): Integer;
+begin
+  oDao.Excluir(ATabela);
+end;
+
+end.

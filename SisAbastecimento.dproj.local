@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/10/23 20:14:29.000.987,=C:\Users\Marce\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 20:16:40.000.114,C:\Users\Marce\Documents\Embarcadero\Studio\Projects\Unit1.dfm=E:\Fontes\SisAbastecimento\UPrincipal.dfm</Transaction>
+    <Transaction>2017/10/23 20:16:40.000.114,C:\Users\Marce\Documents\Embarcadero\Studio\Projects\Unit1.pas=E:\Fontes\SisAbastecimento\UPrincipal.pas</Transaction>
+    <Transaction>2017/10/23 20:17:08.000.145,C:\Users\Marce\Documents\Embarcadero\Studio\Projects\Project1.dproj=E:\Fontes\SisAbastecimento\SisAbastecimento.dproj</Transaction>
+    <Transaction>2017/10/23 20:17:50.000.843,E:\Fontes\SisAbastecimento\UPrincipal.pas=E:\Fontes\SisAbastecimento\Views\UPrincipal.pas</Transaction>
+    <Transaction>2017/10/23 20:17:50.000.843,E:\Fontes\SisAbastecimento\UPrincipal.dfm=E:\Fontes\SisAbastecimento\Views\UPrincipal.dfm</Transaction>
+    <Transaction>2017/10/23 20:18:54.000.335,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 20:19:43.000.035,E:\Fontes\SisAbastecimento\Unit1.pas=E:\Fontes\SisAbastecimento\Models\UModelTanque.pas</Transaction>
+    <Transaction>2017/10/23 20:23:34.000.074,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 20:24:02.000.711,E:\Fontes\SisAbastecimento\Unit1.pas=E:\Fontes\SisAbastecimento\Models\UModelBomba.pas</Transaction>
+    <Transaction>2017/10/23 20:28:09.000.843,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 20:28:44.000.814,E:\Fontes\SisAbastecimento\Unit1.pas=E:\Fontes\SisAbastecimento\Models\UModelProduto.pas</Transaction>
+    <Transaction>2017/10/23 20:37:50.000.389,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 20:38:27.000.186,E:\Fontes\SisAbastecimento\Unit1.pas=E:\Fontes\SisAbastecimento\Models\UModelVendas.pas</Transaction>
+    <Transaction>2017/10/23 20:51:39.000.726,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 20:52:18.000.763,E:\Fontes\SisAbastecimento\Unit1.pas=E:\Fontes\SisAbastecimento\Files\UConexao.pas</Transaction>
+    <Transaction>2017/10/23 20:55:54.000.306,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 20:56:23.000.294,E:\Fontes\SisAbastecimento\Unit1.pas=E:\Fontes\SisAbastecimento\Files\UDM.pas</Transaction>
+    <Transaction>2017/10/23 20:56:23.000.294,E:\Fontes\SisAbastecimento\Unit1.dfm=E:\Fontes\SisAbastecimento\Files\UDM.dfm</Transaction>
+    <Transaction>2017/10/23 21:04:30.000.530,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/23 21:04:52.000.635,E:\Fontes\SisAbastecimento\Unit1.pas=E:\Fontes\SisAbastecimento\Views\UConfiguracoes.pas</Transaction>
+    <Transaction>2017/10/23 21:04:52.000.635,E:\Fontes\SisAbastecimento\Unit1.dfm=E:\Fontes\SisAbastecimento\Views\UConfiguracoes.dfm</Transaction>
+    <Transaction>2017/10/24 18:23:55.726,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/24 18:24:33.864,E:\Fontes\SisAbastecimento\Files\UAtributos.pas=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/24 19:02:51.024,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/24 19:03:12.527,E:\Fontes\SisAbastecimento\Files\UDAO.pas=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/24 22:18:15.262,=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+    <Transaction>2017/10/24 22:19:06.952,E:\Fontes\SisAbastecimento\Controller\UControllerTanque.pas=E:\Fontes\SisAbastecimento\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

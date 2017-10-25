@@ -1,0 +1,24 @@
+unit UModelTanque;
+
+interface
+
+type
+
+TModelTanque = class
+private
+    FId: integer;
+    FTanque: string;
+  { private declarations }
+protected
+  { protected declarations }
+public
+  { public declarations }
+  property Id: integer read FId write FId;
+  property Tanque: string read FTanque write FTanque;
+published
+  { published declarations }
+end;
+
+implementation
+
+end.

@@ -1,0 +1,360 @@
+unit UDAO;
+
+interface
+
+uses RTTI, FireDAC.Comp.Client;
+
+type
+
+  TRecParams = record
+      Prop: TRttiProperty;
+      Campo: string;
+      Tabela: TObject;
+      Qry: TObject;
+  end;
+
+  TDAO = class
+  private
+    procedure ConfigParametro(AQuery: TFDQuery; AProp: TRttiProperty; ACampo: string;  ATabela: TObject);
+    procedure SetaDadosTabela(AProp: TRttiProperty; ACampo: string; ATabela: TObject; AQry: TObject);
+    procedure SetaCamposInteger(ARecParams: TRecParams);
+    procedure SetaCamposString(ARecParams: TRecParams);
+    procedure SetaCamposDate(ARecParams: TRecParams);
+    procedure SetaCamposCurrency(ARecParams: TRecParams);
+    { private declarations }
+  public
+    function Inserir(ATabela: TObject): Integer;
+    function Salvar(ATabela: TObject): Integer;
+    function Excluir(ATabela: TObject): Integer;
+    function Buscar(ATabela: TObject): Integer;
+
+    procedure StartTransaction;
+    procedure Commit;
+    procedure RollBack;
+
+    { public declarations }
+  end;
+
+implementation
+
+uses
+  UAtributos, UDM, System.SysUtils;
+
+{ TDAO }
+
+function TDAO.Buscar(ATabela: TObject): Integer;
+var
+  NomeTab: string;
+  CamposPk: TResultArray;
+  Sep: string;
+  Campo: string;
+  Dados: TFDQuery;
+
+  Contexto : TRttiContext;
+  TipoRtti : TRttiType;
+  PropRtti : TRttiProperty;
+begin
+  NomeTab  := PegaNomeTab(ATabela);
+
+  CamposPk := PegaPks(ATabela);
+
+  Dados    := TFDQuery.Create(nil);
+
+  Contexto  := TRttiContext.Create;
+  try
+    TipoRtti := Contexto.GetType( ATabela.ClassType );
+
+    with Dados do
+    begin
+      close;
+      SQL.Clear;
+      sql.Add('Select * from ' + NomeTab);
+      sql.Add('Where');
+
+      Sep := '';
+      for Campo in CamposPk do
+      begin
+        sql.Add(Sep+ Campo + '= :' + Campo);
+        Sep := ' and ';
+
+        for PropRtti in TipoRtti.GetProperties do
+          if CompareText(PropRtti.Name, Campo) = 0 then
+            begin
+              ConfigParametro(Dados, PropRtti, Campo, ATabela);
+            end;
+      end;
+      Open;
+      Result := Fields.Count;
+      if Result > 0 then
+      begin
+        for PropRtti in TipoRtti.GetProperties do
+        begin
+          Campo := PropRtti.Name;
+          SetaDadosTabela(PropRtti, Campo, ATabela, Dados);
+          Sep := ',';
+        end;
+      end;
+
+    end;
+
+  finally
+    Contexto.free;
+  end;
+end;
+
+procedure TDAO.Commit;
+begin
+  dm.FDTransaction1.Commit;
+end;
+
+procedure TDAO.ConfigParametro(AQuery: TFDQuery; AProp: TRttiProperty;
+  ACampo: string; ATabela: TObject);
+begin
+  with AQuery do
+  begin
+    case AProp.PropertyType.TypeKind of
+      tkInt64,
+      tkInteger:
+      begin
+        Params.ParamByName(ACampo).AsInteger := AProp.GetValue(ATabela).AsInteger;
+      end;
+      tkChar,
+      tkString,
+      tkUString:
+      begin
+        Params.ParamByName(ACampo).AsString := AProp.GetValue(ATabela).AsString;
+      end;
+      tkFloat:
+      begin
+         Params.ParamByName(ACampo).AsCurrency := AProp.GetValue(ATabela).AsCurrency;
+      end;
+      tkVariant:
+      begin
+        Params.ParamByName(ACampo).AsCurrency := AProp.GetValue(ATabela).AsVariant;
+      end;
+    else
+      raise Exception.Create('Tipo de campo não conhecido: ' + AProp.PropertyType.ToString);
+    end;
+  end;
+end;
+
+function TDAO.Excluir(ATabela: TObject): Integer;
+var
+  NomeTab: string;
+  CamposPk: TResultArray;
+  Sep: string;
+  Campo: string;
+
+  Contexto : TRttiContext;
+  TipoRtti : TRttiType;
+  PropRtti : TRttiProperty;
+begin
+  NomeTab  := PegaNomeTab(ATabela);
+
+  CamposPk := PegaPks(ATabela);
+
+  Contexto  := TRttiContext.Create;
+  try
+    TipoRtti := Contexto.GetType( ATabela.ClassType );
+
+    with dm.Qry do
+    begin
+      close;
+      SQL.Clear;
+      sql.Add('Delete from ' + NomeTab);
+      sql.Add('Where');
+
+      Sep := '';
+      for Campo in CamposPk do
+      begin
+        sql.Add(Sep+ Campo + '= :' + Campo);
+        Sep := ' and ';
+
+        for PropRtti in TipoRtti.GetProperties do
+          if CompareText(PropRtti.Name, Campo) = 0 then
+            begin
+              ConfigParametro(dm.Qry, PropRtti, Campo, ATabela);
+            end;
+      end;
+
+      Prepare();
+      ExecSQL;
+      Result := RowsAffected;
+    end;
+  finally
+    Contexto.free;
+  end;
+end;
+
+function TDAO.Inserir(ATabela: TObject): Integer;
+var
+  Campo: string;
+  Sep: string;
+  Contexto: TRttiContext;
+  TipoRtti: TRttiType;
+  PropRtti: TRttiProperty;
+begin
+  Contexto  := TRttiContext.Create;
+  try
+    TipoRtti := Contexto.GetType( ATabela.ClassType );
+    with dm.Qry do
+    begin
+      sql.Add('Insert into ' + PegaNomeTab(ATabela));
+      sql.Add('(');
+
+      Sep := '';
+      for PropRtti in TipoRtti.GetProperties do
+      begin
+        SQL.Add(Sep + PropRtti.Name);
+        Sep := ',';
+      end;
+      sql.Add(')');
+
+
+      sql.Add('Values (');
+      Sep := '';
+      for PropRtti in TipoRtti.GetProperties do
+      begin
+        SQL.Add(Sep + ':' + PropRtti.Name);
+        Sep := ',';
+      end;
+      sql.Add(')');
+
+      for PropRtti in TipoRtti.GetProperties do
+      begin
+        Campo := PropRtti.Name;
+        ConfigParametro(dm.Qry, PropRtti, Campo, ATabela);
+      end;
+      Prepare();
+      ExecSQL;
+      Result := RowsAffected;
+    end;
+  finally
+    Contexto.free;
+  end;
+end;
+
+procedure TDAO.RollBack;
+begin
+  dm.FDTransaction1.Rollback;
+end;
+
+function TDAO.Salvar(ATabela: TObject): Integer;
+var
+  Campo: string;
+  Sep: string;
+  Contexto: TRttiContext;
+  TipoRtti: TRttiType;
+  PropRtti: TRttiProperty;
+  CamposPk: TResultArray;
+begin
+  Contexto  := TRttiContext.Create;
+  try
+    TipoRtti := Contexto.GetType( ATabela.ClassType );
+    CamposPk := PegaPks(ATabela);
+    with dm.Qry do
+    begin
+      sql.Add('Update ' + PegaNomeTab(ATabela));
+      sql.Add('set');
+
+      Sep := '';
+      for PropRtti in TipoRtti.GetProperties do
+      begin
+        SQL.Add(Sep + PropRtti.Name + '=:'+PropRtti.Name);
+        Sep := ',';
+      end;
+      sql.Add('where');
+
+      Sep := '';
+      for Campo in CamposPk do
+      begin
+        sql.Add(Sep+ Campo + '= :' + Campo);
+        Sep := ' and ';
+      end;
+
+      for PropRtti in TipoRtti.GetProperties do
+      begin
+        Campo := PropRtti.Name;
+        ConfigParametro(dm.Qry, PropRtti, Campo, ATabela);
+      end;
+
+      Prepare();
+      ExecSQL;
+      Result := RowsAffected;
+    end;
+  finally
+    Contexto.free;
+  end;
+end;
+
+procedure TDAO.SetaCamposCurrency(ARecParams: TRecParams);
+begin
+  with ARecParams do
+  begin
+    Prop.SetValue(Tabela, TFDQuery(Qry).Fields.FieldByName(Campo).AsCurrency);
+  end;
+end;
+
+procedure TDAO.SetaCamposDate(ARecParams: TRecParams);
+begin
+  with ARecParams do
+  begin
+    Prop.SetValue(Tabela, TFDQuery(Qry).Fields.FieldByName(Campo).AsDateTime);
+  end;
+end;
+
+procedure TDAO.SetaCamposInteger(ARecParams: TRecParams);
+begin
+  with ARecParams do
+  begin
+    Prop.SetValue(Tabela, TFDQuery(Qry).Fields.FieldByName(Campo).AsInteger);
+  end;
+end;
+
+procedure TDAO.SetaCamposString(ARecParams: TRecParams);
+begin
+  with ARecParams do
+  begin
+    Prop.SetValue(Tabela, TFDQuery(Qry).Fields.FieldByName(Campo).AsString);
+  end;
+
+end;
+
+procedure TDAO.SetaDadosTabela(AProp: TRttiProperty; ACampo: string; ATabela,
+  AQry: TObject);
+var
+  Params: TRecParams;
+begin
+  Params.Prop   := AProp;
+  Params.Campo  := ACampo;
+  Params.Tabela := ATabela;
+  Params.Qry    := AQry;
+
+  case AProp.PropertyType.TypeKind of
+    tkInt64, tkInteger:
+    begin
+      SetaCamposInteger(Params);
+    end;
+    tkChar, tkString, tkUString:
+    begin
+      SetaCamposString(Params);
+    end;
+    tkFloat:
+      begin
+        if CompareText(AProp.PropertyType.Name, 'TDateTime') = 0 then
+          SetaCamposDate(Params)
+        else
+          SetaCamposCurrency(Params);
+      end;
+  else
+    raise Exception.Create('Tipo de campo não conhecido: ' +
+      AProp.PropertyType.ToString);
+  end;
+end;
+
+procedure TDAO.StartTransaction;
+begin
+  dm.FDTransaction1.StartTransaction;
+end;
+
+end.
