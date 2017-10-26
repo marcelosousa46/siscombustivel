@@ -4,7 +4,6 @@ object DM: TDM
   Width = 340
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=E:\Fontes\SisAbastecimento\Banco\SYSABASTECIMENTO.GDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'Port=3051'

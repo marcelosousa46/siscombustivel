@@ -49,7 +49,8 @@ begin
         Conexao.Params.Add('password='+ Senha);
         Conexao.Params.Add('port='+ IntToStr(Porta));
         Conexao.Params.Add('Database='+ Database);
-        Conexao.Params.Add('DriverID='+ Driver);
+        Conexao.Params.Add('DriverID='+ 'FB');
+        Conexao.Connected := true;
      Except
         on E:Exception do
         ShowMessage('Erro ao carregar parâmetros de conexão!'#13#10 + E.Message);
@@ -66,8 +67,8 @@ begin
     else
     begin
        Self.Path := Path;
+       Self.Secao := Secao;
        GravaINI('','','','',0);
-//       raise Exception.Create('Arquivo INI para configuração não encontrado.'#13#10'Aplicação será finalizada.');
     end;
 end;
 

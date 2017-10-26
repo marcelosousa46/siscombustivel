@@ -187,6 +187,7 @@ begin
   //
   oProduto := TControllerProduto.Create;
   produto  := TModelProduto.Create;
+  qryTabela.Active := false;
   qryTabela.Active := true;
   edData.Date := Date;
 
