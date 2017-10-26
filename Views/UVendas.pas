@@ -31,6 +31,7 @@ type
     qryTabelaPRODUTO: TStringField;
     edData: TDateTimePicker;
     Label6: TLabel;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edIdProdutoExit(Sender: TObject);
@@ -40,6 +41,7 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure btExcluirClick(Sender: TObject);
     procedure btSalvarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,6 +58,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses URelVendas;
 
 procedure TfrmVendas.btExcluirClick(Sender: TObject);
 begin
@@ -101,6 +105,14 @@ begin
   qryTabela.Active := false;
   qryTabela.Active := true;
   LimparCampos(frmVendas);
+
+end;
+
+procedure TfrmVendas.Button1Click(Sender: TObject);
+begin
+  inherited;
+   frmRelVendas := TfrmRelVendas.Create(self);
+   frmRelVendas.RLReport1.Preview();
 
 end;
 

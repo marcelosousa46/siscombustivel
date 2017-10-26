@@ -63,10 +63,21 @@ begin
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
+var
+  caminho: string;
 begin
-    conexaoClass := TConexao.Create(ExtractFilePath(Application.ExeName) + 'Config.ini', 'Conexao');
-    conexaoClass.LeINI;
-    conexaoClass.Conectar(dm.FDConnection1);
+    caminho := ExtractFilePath(Application.ExeName) + 'Config.ini';
+    if not FileExists(caminho) then
+    begin
+     frmConfiguracoes := TfrmConfiguracoes.Create(self);
+     frmConfiguracoes.ShowModal;
+    end
+    else
+    begin
+      conexaoClass := TConexao.Create(ExtractFilePath(Application.ExeName) + 'Config.ini', 'Conexao');
+      conexaoClass.LeINI;
+      conexaoClass.Conectar(dm.FDConnection1);
+    end;
 end;
 
 procedure TfrmPrincipal.Produtos1Click(Sender: TObject);

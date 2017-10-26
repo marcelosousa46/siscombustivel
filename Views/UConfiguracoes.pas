@@ -47,7 +47,9 @@ begin
 
   conexaoClass.GravaINI(edtUsuario.Text, edtSenha.Text, edtServidor.Text, edtBancoDados.Text, StrToInt(edtPorta.Text));
   MessageDlg('Gravado com sucesso!', mtConfirmation, [mbOK],0);
+  close;
 end;
+
 
 procedure TfrmConfiguracoes.SpeedButton1Click(Sender: TObject);
 begin

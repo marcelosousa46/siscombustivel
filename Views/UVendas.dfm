@@ -109,6 +109,15 @@ inherited frmVendas: TfrmVendas
         Time = 43034.199874629630000000
         TabOrder = 5
       end
+      object Button1: TButton
+        Left = 514
+        Top = 19
+        Width = 159
+        Height = 25
+        Caption = 'Gerar rel'#225'torio de vendas'
+        TabOrder = 6
+        OnClick = Button1Click
+      end
     end
     inherited Panel3: TPanel
       inherited DBGrid1: TDBGrid
@@ -164,7 +173,7 @@ inherited frmVendas: TfrmVendas
   end
   inherited ImageList1: TImageList
     Bitmap = {
-      494C010104000800300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010104000800340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -436,7 +445,6 @@ inherited frmVendas: TfrmVendas
       000000000000}
   end
   inherited qryTabela: TFDQuery
-    Active = True
     SQL.Strings = (
       'select vendas.*,PRODUTO.PRODUTO from vendas'
       'inner join PRODUTO on (vendas.ID_PRODUTO = PRODUTO.ID)')

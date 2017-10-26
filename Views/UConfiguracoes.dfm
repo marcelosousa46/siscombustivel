@@ -11,6 +11,7 @@ object frmConfiguracoes: TfrmConfiguracoes
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -76,6 +77,7 @@ object frmConfiguracoes: TfrmConfiguracoes
       Width = 273
       Height = 21
       TabOrder = 1
+      Text = 'localhost'
     end
     object edtPorta: TEdit
       Left = 294
@@ -83,6 +85,7 @@ object frmConfiguracoes: TfrmConfiguracoes
       Width = 155
       Height = 21
       TabOrder = 2
+      Text = '3051'
     end
     object edtUsuario: TEdit
       Left = 16
@@ -90,6 +93,7 @@ object frmConfiguracoes: TfrmConfiguracoes
       Width = 273
       Height = 21
       TabOrder = 3
+      Text = 'SYSDBA'
     end
     object edtSenha: TEdit
       Left = 294
@@ -97,6 +101,7 @@ object frmConfiguracoes: TfrmConfiguracoes
       Width = 155
       Height = 21
       TabOrder = 4
+      Text = 'masterkey'
     end
     object btnGravar: TBitBtn
       Left = 472

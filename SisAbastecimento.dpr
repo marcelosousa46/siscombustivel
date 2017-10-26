@@ -21,7 +21,8 @@ uses
   UHelperClasse in 'Files\UHelperClasse.pas',
   UCadBombas in 'Views\UCadBombas.pas' {frmCadBombas},
   UCadProdutos in 'Views\UCadProdutos.pas' {frmCadProdutos},
-  UVendas in 'Views\UVendas.pas' {frmVendas};
+  UVendas in 'Views\UVendas.pas' {frmVendas},
+  URelVendas in 'Files\URelVendas.pas' {frmRelVendas};
 
 {$R *.res}
 
@@ -34,5 +35,6 @@ begin
   Application.CreateForm(TfrmCadBombas, frmCadBombas);
   Application.CreateForm(TfrmCadProdutos, frmCadProdutos);
   Application.CreateForm(TfrmVendas, frmVendas);
+  Application.CreateForm(TfrmRelVendas, frmRelVendas);
   Application.Run;
 end.

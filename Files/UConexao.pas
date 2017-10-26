@@ -64,7 +64,11 @@ begin
        Self.Secao := Secao;
     end
     else
-       raise Exception.Create('Arquivo INI para configuração não encontrado.'#13#10'Aplicação será finalizada.');
+    begin
+       Self.Path := Path;
+       GravaINI('','','','',0);
+//       raise Exception.Create('Arquivo INI para configuração não encontrado.'#13#10'Aplicação será finalizada.');
+    end;
 end;
 
 procedure TConexao.GravaINI(Usuario, Senha, Servidor, Banco: string; Porta: integer);
