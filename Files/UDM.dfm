@@ -7,7 +7,9 @@ object DM: TDM
       'User_Name=SYSDBA'
       'Password=masterkey'
       'Port=3051'
+      'Database=E:\Fontes\SisAbastecimento\Banco\SYSABASTECIMENTO.GDB'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
     BeforeConnect = FDConnection1BeforeConnect
     Left = 96
