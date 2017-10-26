@@ -16,47 +16,30 @@ object frmPrincipal: TfrmPrincipal
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object btnConexao: TBitBtn
-    Left = 480
-    Top = 32
-    Width = 75
-    Height = 25
-    Caption = 'Conex'#227'o'
-    TabOrder = 0
-  end
-  object Memo1: TMemo
-    Left = 370
-    Top = 112
-    Width = 185
-    Height = 89
-    TabOrder = 1
-  end
-  object Button1: TButton
-    Left = 370
-    Top = 224
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 2
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 504
-    Top = 224
-    Width = 75
-    Height = 25
-    Caption = 'Excluir'
-    TabOrder = 3
-    OnClick = Button2Click
-  end
   object MainMenu1: TMainMenu
     Left = 576
     Top = 64
     object Cadastros1: TMenuItem
       Caption = '&Cadastros'
+      object anques1: TMenuItem
+        Caption = '&Tanques'
+        OnClick = anques1Click
+      end
+      object Bombas1: TMenuItem
+        Caption = '&Bombas'
+        OnClick = Bombas1Click
+      end
+      object Produtos1: TMenuItem
+        Caption = '&Produtos'
+        OnClick = Produtos1Click
+      end
+    end
+    object Vendas1: TMenuItem
+      Caption = '&Vendas'
+      OnClick = Vendas1Click
     end
     object Configurao1: TMenuItem
-      Caption = 'Confi&gura'#231#227'o'
+      Caption = 'Confi&gura'#231#245'es'
       OnClick = Configurao1Click
     end
     object Sair1: TMenuItem

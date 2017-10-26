@@ -19,6 +19,7 @@ type
     function Salvar(ATabela: TObject): Integer;
     function Excluir(ATabela: TObject): Integer;
     function Buscar(ATabela: TObject): Integer;
+    function MaxCodigo:integer;
     { public declarations }
 
   published
@@ -30,7 +31,7 @@ var
 implementation
 
 uses
-  System.SysUtils, Vcl.Dialogs, UModelTanque;
+  System.SysUtils, Vcl.Dialogs, UModelTanque, FireDAC.Comp.Client, UDM;
 
 { TControllerBomba }
 
@@ -94,6 +95,26 @@ begin
       end;
   end;
 
+end;
+
+function TControllerBomba.MaxCodigo: integer;
+var
+  sql: TFDQuery;
+begin
+  sql := TFDQuery.Create(Dm);
+  sql.Connection := dm.FDConnection1;
+  sql.SQL.Add('select max(ID) from BOMBA');
+  try
+    sql.Open;
+    Result := sql.Fields[0].AsInteger + 1;
+  except
+   on E: Exception do
+      begin
+        oDao.RollBack;
+        ShowMessage('Ocorreu um problema ao executar operação: ' + e.Message);
+      end;
+
+  end;
 end;
 
 function TControllerBomba.Salvar(ATabela: TObject): Integer;

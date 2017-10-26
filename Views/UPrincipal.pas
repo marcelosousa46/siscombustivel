@@ -13,15 +13,17 @@ type
     Cadastros1: TMenuItem;
     Configurao1: TMenuItem;
     Sair1: TMenuItem;
-    btnConexao: TBitBtn;
-    Memo1: TMemo;
-    Button1: TButton;
-    Button2: TButton;
+    anques1: TMenuItem;
+    Bombas1: TMenuItem;
+    Produtos1: TMenuItem;
+    Vendas1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Configurao1Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
+    procedure anques1Click(Sender: TObject);
+    procedure Bombas1Click(Sender: TObject);
+    procedure Produtos1Click(Sender: TObject);
+    procedure Vendas1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,35 +39,19 @@ implementation
 {$R *.dfm}
 
 uses UDM, UConfiguracoes, UModelBomba, UAtributos, UDAO, UControllerTanque,
-  UModelTanque;
+  UModelTanque, UCadTanque, UCadBombas, UCadProdutos, UVendas;
 
-procedure TfrmPrincipal.Button1Click(Sender: TObject);
-var
-  ATab: TModelBomba;
+procedure TfrmPrincipal.anques1Click(Sender: TObject);
 begin
-  ATab := TModelBomba.Create;
-  try
-    Memo1.Clear;
-    Memo1.Lines.Add(PegaPks(ATab)[0]);
-  finally
-    ATab.Free;
-  end;end;
+   frmCadTanque := TfrmCadTanque.Create(self);
+   frmCadTanque.ShowModal;
 
-procedure TfrmPrincipal.Button2Click(Sender: TObject);
-var
-  dao : TControllerTanque;
-  tanque : TModelTanque;
+end;
+
+procedure TfrmPrincipal.Bombas1Click(Sender: TObject);
 begin
-  dao := TControllerTanque.Create;
-  tanque := TModelTanque.Create;
-
-  tanque.Id := 2;
-  tanque.Tanque := 'TANQUE 3';
-
-//  dao.Excluir(bomba);
-//  dao.Inserir(tanque);
-//  dao.Salvar(tanque);
-  dao.Buscar(tanque);
+   frmCadBombas := TfrmCadBombas.Create(self);
+   frmCadBombas.ShowModal;
 
 end;
 
@@ -81,23 +67,25 @@ begin
     conexaoClass := TConexao.Create(ExtractFilePath(Application.ExeName) + 'Config.ini', 'Conexao');
     conexaoClass.LeINI;
     conexaoClass.Conectar(dm.FDConnection1);
-    if not dm.FDConnection1.Connected then
-    begin
-        dm.FDConnection1.Connected := True;
-        btnConexao.Font.Color      := clRed;
-        btnConexao.Caption         := 'Desconectar';
-    end
-    else
-    begin
-        dm.FDConnection1.Connected := false;
-        btnConexao.Font.Color      := clGreen;
-        btnConexao.Caption         := 'Conectar';
-    end;
+end;
+
+procedure TfrmPrincipal.Produtos1Click(Sender: TObject);
+begin
+   frmCadProdutos := TfrmCadProdutos.Create(self);
+   frmCadProdutos.ShowModal;
+
 end;
 
 procedure TfrmPrincipal.Sair1Click(Sender: TObject);
 begin
   close;
+end;
+
+procedure TfrmPrincipal.Vendas1Click(Sender: TObject);
+begin
+   frmVendas := TfrmVendas.Create(self);
+   frmVendas.ShowModal;
+
 end;
 
 end.

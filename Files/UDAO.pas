@@ -125,7 +125,10 @@ begin
       end;
       tkFloat:
       begin
-         Params.ParamByName(ACampo).AsCurrency := AProp.GetValue(ATabela).AsCurrency;
+         if CompareText(AProp.PropertyType.Name, 'TDateTime') = 0 then
+           Params.ParamByName(ACampo).AsDate := AProp.GetValue(ATabela).AsType<TDate>
+         else
+           Params.ParamByName(ACampo).AsCurrency := AProp.GetValue(ATabela).AsCurrency;
       end;
       tkVariant:
       begin
@@ -198,6 +201,7 @@ begin
     TipoRtti := Contexto.GetType( ATabela.ClassType );
     with dm.Qry do
     begin
+      sql.clear;
       sql.Add('Insert into ' + PegaNomeTab(ATabela));
       sql.Add('(');
 
@@ -253,6 +257,8 @@ begin
     CamposPk := PegaPks(ATabela);
     with dm.Qry do
     begin
+      sql.clear;
+      sql.clear;
       sql.Add('Update ' + PegaNomeTab(ATabela));
       sql.Add('set');
 

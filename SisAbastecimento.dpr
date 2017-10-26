@@ -13,10 +13,15 @@ uses
   UAtributos in 'Files\UAtributos.pas',
   UDAO in 'Files\UDAO.pas',
   UControllerTanque in 'Controller\UControllerTanque.pas',
-  UTanques in 'Views\UTanques.pas' {frmTanque},
+  UPadrao in 'Views\UPadrao.pas' {frmPadrao},
   UControllerBomba in 'Controller\UControllerBomba.pas',
   UControllerProduto in 'Controller\UControllerProduto.pas',
-  UControllerVendas in 'Controller\UControllerVendas.pas';
+  UControllerVendas in 'Controller\UControllerVendas.pas',
+  UCadTanque in 'Views\UCadTanque.pas' {frmCadTanque},
+  UHelperClasse in 'Files\UHelperClasse.pas',
+  UCadBombas in 'Views\UCadBombas.pas' {frmCadBombas},
+  UCadProdutos in 'Views\UCadProdutos.pas' {frmCadProdutos},
+  UVendas in 'Views\UVendas.pas' {frmVendas};
 
 {$R *.res}
 
@@ -25,6 +30,9 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TfrmTanque, frmTanque);
+  Application.CreateForm(TfrmCadTanque, frmCadTanque);
+  Application.CreateForm(TfrmCadBombas, frmCadBombas);
+  Application.CreateForm(TfrmCadProdutos, frmCadProdutos);
+  Application.CreateForm(TfrmVendas, frmVendas);
   Application.Run;
 end.
